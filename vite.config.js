@@ -4,5 +4,5 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/SEG3125-Assignment-3/',
+  base: './',
 })
