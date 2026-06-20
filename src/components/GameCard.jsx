@@ -9,11 +9,11 @@ import { SHARK_SHAPES } from '../cards/SharkCards';
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const PAIR_COLORS = [
-  '#6B9FB8', '#8A9EB5', '#B8A48A', '#7A8EA0',
-  '#9BAAB8', '#C4A882', '#6D8FA8', '#B0A890',
-  '#2a9d8f', '#e9c46a', '#e76f51', '#264653',
-  '#f4a261', '#7c3aed', '#2a9d8f', '#e9c46a',
-  '#e76f51', '#264653',
+  '#d90429', '#e76f51', '#2a9d8f', '#0077b6',
+  '#023e8a', '#03045e', '#8338ec', '#b5179e',
+  '#f15bb5', '#ff006e', '#5f0f40', '#9d0208',
+  '#2b2d42', '#6c757d', '#38b000', '#00f5d4',
+  '#a3b18a', '#432818',
 ];
 
 export default function GameCard({ card, deck, isMismatched, onClick, disabled }) {
