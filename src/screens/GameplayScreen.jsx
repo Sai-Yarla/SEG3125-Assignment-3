@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useTheme } from '../ThemeContext';
 import TopBar from '../components/TopBar';
 import GameGrid from '../components/GameGrid';
 import useGameState from '../hooks/useGameState';
@@ -11,7 +10,6 @@ import useTimer from '../hooks/useTimer';
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function GameplayScreen({ config, onGameOver, onBack }) {
-  const { theme } = useTheme();
   const game = useGameState();
   const flipTimeoutRef = useRef(null);
 
@@ -91,27 +89,27 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
       <div className="hud-bar" id="hud-bar">
         <div className="hud-bar__left">
           <div className="hud-bar__stat">
-            <span>{theme === 'dark' ? 'MODE:' : 'Grid:'}</span>
+            <span>Grid:</span>
             <span className="hud-bar__stat-value">
               {config.gridSize.toUpperCase()}
             </span>
           </div>
           <div className="hud-bar__stat">
-            <span>{theme === 'dark' ? 'DECK:' : 'Theme:'}</span>
+            <span>Theme:</span>
             <span className="hud-bar__stat-value">
-              {config.deck === 'mechanical' ? (theme === 'dark' ? 'MECH' : 'Mechanical') : (theme === 'dark' ? 'SHARK' : 'Shark')}
+              {config.deck === 'mechanical' ? 'Mechanical' : 'Shark'}
             </span>
           </div>
           <div className="hud-bar__stat">
-            <span>{theme === 'dark' ? 'M:' : 'Matches:'}</span>
+            <span>Matches:</span>
             <span className="hud-bar__stat-value">{matches}/{totalPairs}</span>
           </div>
           <div className="hud-bar__stat">
-            <span>{theme === 'dark' ? 'MOVES:' : 'Moves:'}</span>
+            <span>Moves:</span>
             <span className="hud-bar__stat-value">{moves}</span>
           </div>
           <div className="hud-bar__stat">
-            <span>{theme === 'dark' ? 'ACC:' : 'Accuracy:'}</span>
+            <span>Accuracy:</span>
             <span className="hud-bar__stat-value">{accuracy}%</span>
           </div>
         </div>
@@ -133,7 +131,7 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
             onClick={onBack}
             id="quit-button"
           >
-            {theme === 'dark' ? 'END RACE →' : 'Quit'}
+            Quit
           </button>
         </div>
       </div>

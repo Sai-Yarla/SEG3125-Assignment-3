@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useTheme } from '../ThemeContext';
 import TopBar from '../components/TopBar';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SetupScreen — Game configuration screen
-   Combines Leo's efficient toggles with Clara's visual card previews
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const GRID_OPTIONS = [
@@ -31,11 +29,10 @@ const TIMER_DURATIONS = {
 };
 
 export default function SetupScreen({ onStart }) {
-  const { theme } = useTheme();
   const [gridSize, setGridSize] = useState('4x4');
-  const [deck, setDeck] = useState(theme === 'dark' ? 'mechanical' : 'shark');
+  const [deck, setDeck] = useState('shark');
   const [difficulty, setDifficulty] = useState('standard');
-  const [timedMode, setTimedMode] = useState(theme === 'dark');
+  const [timedMode, setTimedMode] = useState(false);
 
   const selectedGrid = GRID_OPTIONS.find(g => g.value === gridSize);
   const selectedDiff = DIFFICULTY_OPTIONS.find(d => d.value === difficulty);
@@ -62,19 +59,13 @@ export default function SetupScreen({ onStart }) {
           {/* Header */}
           <div className="setup-header">
             <div className="setup-header__tag">
-              {theme === 'dark' ? 'MATCH PROTOCOL // INITIALIZE' : 'Welcome to'}
+              Welcome to
             </div>
             <h1 className="setup-header__title">
-              {theme === 'dark' ? (
-                <>GESTALT<span> MATCH</span></>
-              ) : (
-                <>Gestalt<span> Match</span></>
-              )}
+              Steel<span> Shark</span>
             </h1>
             <div className="setup-header__subtitle">
-              {theme === 'dark'
-                ? 'STEEL SHARK: COGNITIVE SPEED TEST'
-                : 'A visual memory game of complementary halves'}
+              A visual memory game of complementary halves
             </div>
           </div>
 
@@ -83,7 +74,7 @@ export default function SetupScreen({ onStart }) {
             <div className="config-panel__header">
               <div className="config-panel__header-dot" />
               <span className="config-panel__header-text">
-                {theme === 'dark' ? 'RACE CONFIGURATION' : 'Game Settings'}
+                Game Settings
               </span>
             </div>
 
@@ -93,7 +84,7 @@ export default function SetupScreen({ onStart }) {
               <div className="config-row">
                 <div className="config-row__header">
                   <label className="config-row__label" id="grid-label">
-                    {theme === 'dark' ? 'GRID MATRIX' : 'Grid Size'}
+                    Grid Size
                   </label>
                   <span className="config-row__info">
                     {selectedGrid?.label} — {selectedGrid?.pairs} PAIRS
@@ -119,10 +110,10 @@ export default function SetupScreen({ onStart }) {
               <div className="config-row">
                 <div className="config-row__header">
                   <label className="config-row__label" id="difficulty-label">
-                    {theme === 'dark' ? 'DIFFICULTY TIER' : 'Difficulty'}
+                    Difficulty
                   </label>
                   <span className="config-row__info" style={{ color: difficulty === 'expert' ? 'var(--accent-danger)' : undefined }}>
-                    {theme === 'dark' ? `FLIP TIMEOUT: ${selectedDiff?.timeout}` : `Flip delay: ${selectedDiff?.timeout}`}
+                    Flip delay: {selectedDiff?.timeout}
                   </span>
                 </div>
                 <div className="seg-buttons" role="radiogroup" aria-labelledby="difficulty-label">
@@ -145,7 +136,7 @@ export default function SetupScreen({ onStart }) {
               <div className="config-row">
                 <div className="config-row__header">
                   <label className="config-row__label" id="deck-label">
-                    {theme === 'dark' ? 'CARD SCHEMA' : 'Card Theme'}
+                    Card Theme
                   </label>
                 </div>
                 <div className="seg-buttons" role="radiogroup" aria-labelledby="deck-label">
@@ -168,12 +159,12 @@ export default function SetupScreen({ onStart }) {
               <div className="config-row">
                 <div className="config-row__header">
                   <label className="config-row__label" id="timer-label">
-                    {theme === 'dark' ? 'RACE TIMER' : 'Timer'}
+                    Timer
                   </label>
                   <span className="config-row__info">
                     {timedMode
-                      ? (theme === 'dark' ? `COUNTDOWN: ${Math.floor(timerDuration / 60)}:${String(timerDuration % 60).padStart(2, '0')}` : `${Math.floor(timerDuration / 60)} min countdown`)
-                      : (theme === 'dark' ? 'DISABLED — RELAXED' : 'Relaxed — No pressure')}
+                      ? `${Math.floor(timerDuration / 60)} min countdown`
+                      : 'Relaxed — No pressure'}
                   </span>
                 </div>
                 <div className="timer-toggle">
@@ -188,9 +179,7 @@ export default function SetupScreen({ onStart }) {
                     <div className="timer-toggle__switch-knob" />
                   </button>
                   <span className="timer-toggle__label">
-                    {timedMode
-                      ? (theme === 'dark' ? 'TIMED RACE' : 'Timed')
-                      : (theme === 'dark' ? 'RELAXED MODE' : 'Relaxed')}
+                    {timedMode ? 'Timed' : 'Relaxed'}
                   </span>
                 </div>
               </div>
@@ -198,9 +187,9 @@ export default function SetupScreen({ onStart }) {
               {/* Stats Row */}
               <div className="stats-row">
                 {[
-                  { label: theme === 'dark' ? 'PERSONAL BEST' : 'Best Time', value: '1:42' },
-                  { label: theme === 'dark' ? 'GAMES PLAYED' : 'Played', value: '24' },
-                  { label: theme === 'dark' ? 'WIN RATE' : 'Win Rate', value: '84%' },
+                  { label: 'Best Time', value: '1:42' },
+                  { label: 'Played', value: '24' },
+                  { label: 'Win Rate', value: '84%' },
                 ].map(stat => (
                   <div key={stat.label} className="stats-row__item">
                     <div className="stats-row__value">{stat.value}</div>
@@ -213,13 +202,11 @@ export default function SetupScreen({ onStart }) {
 
           {/* Start Button */}
           <button className="start-button" onClick={handleStart} id="start-button">
-            {theme === 'dark' ? '▶ START RACE' : 'Begin Session'}
+            Begin Session
           </button>
 
           <div className="start-hint">
-            {theme === 'dark'
-              ? 'PRESS ENTER TO LAUNCH — ESC TO ABORT'
-              : 'Click to start your matching session'}
+            Click to start your matching session
           </div>
         </div>
       </main>

@@ -31,52 +31,10 @@ button {
 }
 
 /* ─── Dark Theme (Leo — Industrial / Competitive) ────────────────────────── */
-[data-theme="dark"] {
-  --bg-primary: #080b0f;
-  --bg-secondary: #0c1016;
-  --bg-card: #0f1318;
-  --bg-elevated: #141a22;
-  --bg-hover: #1a222e;
 
-  --border-primary: #1e2a38;
-  --border-accent: #2a3a4a;
-
-  --text-primary: #e8ecf0;
-  --text-secondary: #8a9aaa;
-  --text-muted: #4a5a6a;
-  --text-accent: #00c8ff;
-
-  --accent-primary: #00c8ff;
-  --accent-secondary: #00ffc8;
-  --accent-warm: #ffd700;
-  --accent-danger: #ff3d5a;
-  --accent-purple: #a855f7;
-
-  --match-glow: #00ffc8;
-  --mismatch-glow: #ff3d5a;
-
-  --card-back-bg: #0a0e14;
-  --card-back-stroke: #1e3a5a;
-  --card-face-bg: #0d1a24;
-  --card-matched-bg: #0a1f1a;
-  --card-mismatch-bg: #1a0810;
-
-  --font-display: 'Exo 2', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-stat: 'Rajdhani', sans-serif;
-
-  --radius-sm: 0px;
-  --radius-md: 2px;
-  --radius-lg: 4px;
-
-  --card-icon-color: #4a6a8a;
-  --card-icon-matched: #00ffc8;
-  --start-btn-clip: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  --modal-clip: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-}
 
 /* ─── Light Theme (Clara — Gallery / Relaxed) ────────────────────────────── */
-[data-theme="light"] {
+:root {
   --bg-primary: #f8f6f2;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
@@ -163,7 +121,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .top-bar__brand-text {
+.top-bar__brand-text {
   font-size: 14px;
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -233,7 +191,7 @@ button {
   transform: translateX(0);
 }
 
-[data-theme="light"] .theme-toggle__knob {
+.theme-toggle__knob {
   transform: translateX(26px);
 }
 
@@ -271,7 +229,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .setup-header__tag {
+.setup-header__tag {
   font-size: 13px;
   letter-spacing: 0.15em;
   font-weight: 600;
@@ -297,12 +255,12 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .setup-header__title {
+.setup-header__title {
   font-size: 3rem;
   letter-spacing: -0.01em;
 }
 
-[data-theme="light"] .setup-header__subtitle {
+.setup-header__subtitle {
   letter-spacing: 0.02em;
   font-weight: 400;
 }
@@ -330,7 +288,7 @@ button {
   background: var(--accent-primary);
 }
 
-[data-theme="light"] .config-panel__header-dot {
+.config-panel__header-dot {
   border-radius: 50%;
 }
 
@@ -343,7 +301,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .config-panel__header-text {
+.config-panel__header-text {
   font-size: 12px;
   letter-spacing: 0.06em;
 }
@@ -377,7 +335,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .config-row__label {
+.config-row__label {
   font-size: 12px;
   letter-spacing: 0.06em;
   font-weight: 600;
@@ -431,14 +389,14 @@ button {
   color: #fff;
 }
 
-[data-theme="light"] .seg-button {
+.seg-button {
   border-radius: 0;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.03em;
 }
 
-[data-theme="light"] .seg-button--active {
+.seg-button--active {
   color: #fff;
 }
 
@@ -523,7 +481,7 @@ button {
   margin-top: 2px;
 }
 
-[data-theme="light"] .stats-row__label {
+.stats-row__label {
   letter-spacing: 0.05em;
   font-size: 11px;
 }
@@ -556,7 +514,7 @@ button {
   transform: scale(0.99);
 }
 
-[data-theme="light"] .start-button {
+.start-button {
   color: #fff;
   border-radius: var(--radius-md);
   font-size: 1rem;
@@ -572,7 +530,7 @@ button {
   letter-spacing: 0.2em;
 }
 
-[data-theme="light"] .start-hint {
+.start-hint {
   letter-spacing: 0.05em;
 }
 
@@ -654,7 +612,7 @@ button {
   font-weight: 600;
 }
 
-[data-theme="light"] .hud-bar__button {
+.hud-bar__button {
   border-radius: var(--radius-sm);
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -697,7 +655,7 @@ button {
   width: 100%;
 }
 
-[data-theme="light"] .game-grid {
+.game-grid {
   gap: 10px;
 }
 
@@ -742,7 +700,7 @@ button {
   transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
 }
 
-[data-theme="light"] .game-card__face {
+.game-card__face {
   border-radius: var(--radius-md);
 }
 
@@ -769,7 +727,7 @@ button {
   50% { box-shadow: 0 0 24px color-mix(in srgb, var(--match-glow) 50%, transparent), inset 0 0 12px color-mix(in srgb, var(--match-glow) 15%, transparent); }
 }
 
-[data-theme="light"] .game-card--matched .game-card__front {
+.game-card--matched .game-card__front {
   box-shadow: 0 4px 20px color-mix(in srgb, var(--match-glow) 25%, transparent);
   animation: match-glow-light 2s ease-in-out infinite;
 }
@@ -860,7 +818,7 @@ button {
   animation: modal-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-theme="light"] .gameover-card {
+.gameover-card {
   box-shadow: 0 20px 60px rgba(0,0,0,0.08);
 }
 
@@ -897,7 +855,7 @@ button {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-[data-theme="light"] .gameover-card__header-dot {
+.gameover-card__header-dot {
   border-radius: 50%;
 }
 
@@ -910,7 +868,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .gameover-card__header-text {
+.gameover-card__header-text {
   font-size: 12px;
   letter-spacing: 0.06em;
 }
@@ -937,7 +895,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .gameover-tag {
+.gameover-tag {
   font-size: 13px;
   letter-spacing: 0.1em;
   font-weight: 600;
@@ -954,7 +912,7 @@ button {
   color: var(--accent-primary);
 }
 
-[data-theme="light"] .gameover-title {
+.gameover-title {
   font-size: 2.4rem;
 }
 
@@ -972,7 +930,7 @@ button {
   box-shadow: 0 0 20px color-mix(in srgb, var(--accent-warm) 40%, transparent);
 }
 
-[data-theme="light"] .gameover-badge {
+.gameover-badge {
   clip-path: none;
   border-radius: var(--radius-sm);
 }
@@ -996,7 +954,7 @@ button {
   font-weight: 500;
 }
 
-[data-theme="light"] .gameover-big-stat__label {
+.gameover-big-stat__label {
   font-size: 12px;
   letter-spacing: 0.06em;
 }
@@ -1044,7 +1002,7 @@ button {
   margin-top: 2px;
 }
 
-[data-theme="light"] .gameover-stats__label {
+.gameover-stats__label {
   font-size: 11px;
   letter-spacing: 0.04em;
 }
@@ -1072,7 +1030,7 @@ button {
   color: var(--bg-primary);
 }
 
-[data-theme="light"] .gameover-btn--primary {
+.gameover-btn--primary {
   color: #fff;
 }
 

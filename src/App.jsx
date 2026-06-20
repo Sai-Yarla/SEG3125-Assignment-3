@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { ThemeProvider } from './ThemeContext';
 import SetupScreen from './screens/SetupScreen';
 import GameplayScreen from './screens/GameplayScreen';
 import GameOverScreen from './screens/GameOverScreen';
@@ -38,7 +37,7 @@ export default function App() {
   }, []);
 
   return (
-    <ThemeProvider>
+    <>
       {screen === 'setup' && (
         <SetupScreen onStart={handleStart} />
       )}
@@ -59,6 +58,7 @@ export default function App() {
           onBack={handleBackToSetup}
         />
       )}
-    </ThemeProvider>
+    </>
   );
 }
+
