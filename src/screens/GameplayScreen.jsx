@@ -87,39 +87,39 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
       style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
       {/* Header */}
-      <div className="shrink-0 pt-10 pb-5 px-6 flex items-end justify-between max-w-sm mx-auto w-full">
+      <div className="shrink-0 pt-10 pb-5 px-6 flex items-end justify-between max-w-3xl mx-auto w-full">
         <div>
-          <p className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">Steel Shark</p>
-          <p className="text-sm text-foreground mt-0.5" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <p className="text-xs tracking-[0.28em] uppercase text-muted-foreground">Steel Shark</p>
+          <p className="text-xl text-foreground mt-0.5" style={{ fontFamily: "'Playfair Display', serif" }}>
             Gestalt Match
           </p>
-          <div className="flex gap-2 mt-2">
+          <div className="flex gap-2 mt-3">
             <button
               onClick={onBack}
-              className="text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
             >
-              Quit
+              Quit Game
             </button>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Pairs found</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">Pairs found</p>
           <p
-            className="text-[1.6rem] text-foreground leading-none mt-0.5"
+            className="text-[2rem] text-foreground leading-none mt-1"
             style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
           >
             {matches}
-            <span className="text-sm text-muted-foreground"> / {totalPairs}</span>
+            <span className="text-lg text-muted-foreground"> / {totalPairs}</span>
           </p>
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1.5" style={{ color: config.timedMode && timer.isUrgent ? 'var(--destructive)' : undefined }}>
+          <p className="text-xs uppercase tracking-wider text-muted-foreground mt-2" style={{ color: config.timedMode && timer.isUrgent ? 'var(--destructive)' : undefined }}>
             Time: {timer.timeDisplay}
           </p>
         </div>
       </div>
 
       {/* Pair progress bar */}
-      <div className="px-6 max-w-sm mx-auto w-full mb-5">
-        <div className="h-px bg-border rounded-full overflow-hidden">
+      <div className="px-6 max-w-3xl mx-auto w-full mb-6">
+        <div className="h-1.5 bg-border rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-primary/40 rounded-full"
             animate={{ width: `${totalPairs > 0 ? (matches / totalPairs) * 100 : 0}%` }}

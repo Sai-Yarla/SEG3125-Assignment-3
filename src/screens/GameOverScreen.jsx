@@ -25,15 +25,15 @@ export default function GameOverScreen({ stats, onRestart, onMenu }) {
       <motion.div
         className="mb-8 relative"
         style={{ width: 268 }}
-        animate={{ filter: ["drop-shadow(0 0 0px rgba(201,168,130,0))", "drop-shadow(0 6px 20px rgba(201,168,130,0.45))"] }}
-        transition={{ delay: 1.15, duration: 0.7 }}
+        animate={{ filter: ["drop-shadow(0 0 0px rgba(201,168,130,0))", "drop-shadow(0 0 50px rgba(201,168,130,0.8))", "drop-shadow(0 10px 30px rgba(201,168,130,0.5))"] }}
+        transition={{ delay: 1.15, duration: 1.5, ease: "easeOut" }}
       >
         <div className="flex" style={{ height: 115 }}>
           <motion.div
             style={{ width: 134, height: 115, flexShrink: 0 }}
-            initial={{ x: -28, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.32, duration: 0.75, ease: [0.4, 0, 0.2, 1] }}
+            initial={{ x: -60, opacity: 0, rotate: -15 }}
+            animate={{ x: 0, opacity: 1, rotate: 0 }}
+            transition={{ delay: 0.32, duration: 0.8, type: "spring", bounce: 0.4 }}
           >
             <div className="w-full h-full p-2">
               <FaceLeft color={stats.config.deck === 'mechanical' ? '#e76f51' : '#6B9FB8'} />
@@ -41,9 +41,9 @@ export default function GameOverScreen({ stats, onRestart, onMenu }) {
           </motion.div>
           <motion.div
             style={{ width: 134, height: 115, flexShrink: 0 }}
-            initial={{ x: 28, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.32, duration: 0.75, ease: [0.4, 0, 0.2, 1] }}
+            initial={{ x: 60, opacity: 0, rotate: 15 }}
+            animate={{ x: 0, opacity: 1, rotate: 0 }}
+            transition={{ delay: 0.32, duration: 0.8, type: "spring", bounce: 0.4 }}
           >
             <div className="w-full h-full p-2">
               <FaceRight color={stats.config.deck === 'mechanical' ? '#e76f51' : '#6B9FB8'} />
@@ -51,32 +51,32 @@ export default function GameOverScreen({ stats, onRestart, onMenu }) {
           </motion.div>
         </div>
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-          className="text-center text-[10px] tracking-[0.22em] uppercase text-muted-foreground mt-2"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.1, type: "spring" }}
+          className="text-center text-xs tracking-[0.3em] uppercase text-primary font-bold mt-4"
         >
-          {targetShape.name}
+          {targetShape.name} Formed!
         </motion.p>
       </motion.div>
 
       {/* Heading */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.05 }}
-        className="text-center mb-9"
+        initial={{ opacity: 0, y: 20, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 1.05, type: "spring" }}
+        className="text-center mb-10"
       >
-        <p className={`text-[10px] tracking-[0.3em] uppercase mb-2.5 ${stats.won ? 'text-accent-foreground' : 'text-destructive'}`}>
+        <p className={`text-xs tracking-[0.3em] uppercase font-bold mb-3 ${stats.won ? 'text-green-600' : 'text-destructive'}`}>
           {stats.won ? 'All pairs discovered' : 'Time Expired'}
         </p>
         <h1
           className="text-foreground leading-none tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: "clamp(2.2rem, 7vw, 3.4rem)" }}
+          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: "clamp(2.8rem, 8vw, 4.5rem)" }}
         >
           {stats.won ? 'Level Complete' : 'Mission Failed'}
         </h1>
-        <p className="text-sm text-muted-foreground mt-3">
+        <p className="text-base text-muted-foreground mt-4">
           {stats.won
             ? `${stats.matches} perfect forms, perfectly aligned in ${stats.moves} moves.`
             : `You found ${stats.matches} pairs before time ran out.`}

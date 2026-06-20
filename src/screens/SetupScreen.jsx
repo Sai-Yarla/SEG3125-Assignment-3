@@ -9,7 +9,7 @@ import OptionCarousel from '../components/OptionCarousel';
 const GRID_OPTIONS = [
   { id: '4x4', label: '4×4 Grid', sub: '8 Pairs · Beginner', photo: 'photo-1505118380757-91f5f5632de0?w=700&h=400&fit=crop&auto=format' },
   { id: '5x5', label: '5×5 Grid', sub: '12 Pairs · Intermediate', photo: 'photo-1518020382113-a7e8fc38eac9?w=700&h=400&fit=crop&auto=format' },
-  { id: '6x6', label: '6×6 Grid', sub: '18 Pairs · Expert', photo: 'photo-1483722284720-a43c88e8b8c3?w=700&h=400&fit=crop&auto=format' },
+  { id: '6x6', label: '6×6 Grid', sub: '18 Pairs · Expert', photo: 'photo-1550684848-fac1c5b4e853?w=700&h=400&fit=crop&auto=format' },
 ];
 
 const DECK_OPTIONS = [
@@ -76,8 +76,7 @@ export default function SetupScreen({ onStart }) {
         <p className="text-sm text-muted-foreground mt-2.5">Discover the form within</p>
       </div>
 
-      {/* Selection panels */}
-      <div className="flex-1 flex flex-col gap-9 px-6 max-w-md mx-auto w-full">
+      <div className="flex-1 grid grid-cols-2 gap-x-16 gap-y-10 px-6 max-w-3xl mx-auto w-full">
         {/* Grid Size */}
         <section>
           <div className="flex items-center justify-between mb-3.5">

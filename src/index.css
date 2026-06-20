@@ -27,8 +27,9 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f4eade; /* A pleasant, light sand color */
   --foreground: oklch(0.145 0 0);
+  --match-glow: #c9a882; /* Added match-glow for completed cards */
   --card: #ffffff;
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -37,13 +38,13 @@
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.95 0.0058 264.53);
   --secondary-foreground: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
+  --muted: #ebe2d5; /* Light sand for muted areas */
+  --muted-foreground: #7a7062;
   --accent: #e9ebef;
   --accent-foreground: #030213;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
+  --border: rgba(0, 0, 0, 0.08);
   --input: transparent;
   --ring: oklch(0.708 0 0);
   --radius: 0.625rem;
@@ -58,6 +59,7 @@
 body {
   font-family: var(--font-stat);
   background-color: var(--background);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
   color: var(--foreground);
   overflow-x: hidden;
 }
