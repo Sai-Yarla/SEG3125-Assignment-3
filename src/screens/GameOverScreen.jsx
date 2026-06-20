@@ -1,143 +1,143 @@
+import { motion } from 'motion/react';
 import { MECHANICAL_SHAPES } from '../cards/MechanicalCards';
 import { SHARK_SHAPES } from '../cards/SharkCards';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   GameOverScreen — Results / Completion
-   Gallery-like showcase of completed Gestalt shapes
+   GameOverScreen — End of game summary and gallery
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const PAIR_COLORS = [
-  '#2a9d8f', '#e9c46a', '#e76f51', '#264653',
-  '#f4a261', '#7c3aed', '#2a9d8f', '#e9c46a',
-];
-
-export default function GameOverScreen({ results, onRestart, onBack }) {
-  const shapes = results.config.deck === 'mechanical' ? MECHANICAL_SHAPES : SHARK_SHAPES;
-
-  const formatTime = (elapsed) => {
-    const m = Math.floor(elapsed / 60);
-    const s = elapsed % 60;
-    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-  };
-
-  const displayTime = results.config.timedMode
-    ? results.time
-    : formatTime(results.elapsed);
+export default function GameOverScreen({ stats, onRestart, onMenu }) {
+  const shapes = stats.config.deck === 'mechanical' ? MECHANICAL_SHAPES : SHARK_SHAPES;
+  const targetShape = shapes[0];
+  const FaceLeft = targetShape.Left;
+  const FaceRight = targetShape.Right;
 
   return (
-    <div className="gameover-screen">
-      {/* Blurred background grid */}
-      <div className="gameover-bg" style={{ gridTemplateColumns: `repeat(6, 60px)` }}>
-        {Array.from({ length: 36 }).map((_, i) => (
-          <div key={i} className="gameover-bg__cell" />
-        ))}
-      </div>
-
-      {/* Dark overlay */}
-      <div className="gameover-overlay" />
-
-      {/* Modal */}
-      <div className="gameover-modal">
-        <div className="gameover-card" id="gameover-modal">
-
-          {/* Header */}
-          <div className="gameover-card__header">
-            <div className="gameover-card__header-left">
-              <div className="gameover-card__header-dot" />
-              <span className="gameover-card__header-text">
-                Session Complete
-              </span>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen bg-background flex flex-col items-center justify-center px-6 py-12"
+      style={{ fontFamily: "'DM Sans', sans-serif" }}
+    >
+      {/* Assembled Entity – halves slide in */}
+      <motion.div
+        className="mb-8 relative"
+        style={{ width: 268 }}
+        animate={{ filter: ["drop-shadow(0 0 0px rgba(201,168,130,0))", "drop-shadow(0 6px 20px rgba(201,168,130,0.45))"] }}
+        transition={{ delay: 1.15, duration: 0.7 }}
+      >
+        <div className="flex" style={{ height: 115 }}>
+          <motion.div
+            style={{ width: 134, height: 115, flexShrink: 0 }}
+            initial={{ x: -28, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.32, duration: 0.75, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <div className="w-full h-full p-2">
+              <FaceLeft color={stats.config.deck === 'mechanical' ? '#e76f51' : '#6B9FB8'} />
             </div>
-          </div>
-
-          <div className="gameover-card__body">
-
-            {/* Title Area */}
-            <div className="gameover-title-area">
-              <div>
-                <div className="gameover-tag">
-                  {`${results.config.gridSize} ${results.config.deck} deck`}
-                </div>
-                <h2 className="gameover-title">
-                  {results.won ? (
-                    <>Session<br /><span>Complete</span></>
-                  ) : (
-                    <>Time's<br /><span style={{ color: 'var(--accent-danger)' }}>Up</span></>
-                  )}
-                </h2>
-              </div>
-
-              {results.won && (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', marginLeft: '16px', flexShrink: 0 }}>
-                  <div className="gameover-badge">
-                    ★ Well Done
-                  </div>
-                </div>
-              )}
+          </motion.div>
+          <motion.div
+            style={{ width: 134, height: 115, flexShrink: 0 }}
+            initial={{ x: 28, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.32, duration: 0.75, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <div className="w-full h-full p-2">
+              <FaceRight color={stats.config.deck === 'mechanical' ? '#e76f51' : '#6B9FB8'} />
             </div>
-
-            {/* Completed shapes gallery */}
-            {results.won && (
-              <div className="gallery-grid">
-                {shapes.slice(0, Math.min(shapes.length, 8)).map((shape, i) => {
-                  const Complete = shape.Complete;
-                  return (
-                    <div
-                      key={shape.name}
-                      className="gallery-item"
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    >
-                      <Complete color={PAIR_COLORS[i % PAIR_COLORS.length]} />
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Big stat: Time */}
-            <div className="gameover-big-stat">
-              <div className="gameover-big-stat__label">
-                {results.config.timedMode ? 'Remaining Time' : 'Time Taken'}
-              </div>
-              <div className="gameover-big-stat__value">
-                {displayTime}
-              </div>
-            </div>
-
-            {/* Stats grid */}
-            <div className="gameover-stats">
-              <div className="gameover-stats__item">
-                <div className="gameover-stats__value">{results.matches}/{results.totalPairs}</div>
-                <div className="gameover-stats__label">
-                  Pairs
-                </div>
-              </div>
-              <div className="gameover-stats__item">
-                <div className="gameover-stats__value">{results.moves}</div>
-                <div className="gameover-stats__label">
-                  Moves
-                </div>
-              </div>
-              <div className="gameover-stats__item">
-                <div className="gameover-stats__value">{results.accuracy}%</div>
-                <div className="gameover-stats__label">
-                  Accuracy
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="gameover-actions">
-              <button className="gameover-btn gameover-btn--primary" onClick={onRestart} id="restart-button">
-                Play Again
-              </button>
-              <button className="gameover-btn gameover-btn--secondary" onClick={onBack} id="back-button">
-                Back to Menu
-              </button>
-            </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1 }}
+          className="text-center text-[10px] tracking-[0.22em] uppercase text-muted-foreground mt-2"
+        >
+          {targetShape.name}
+        </motion.p>
+      </motion.div>
+
+      {/* Heading */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.05 }}
+        className="text-center mb-9"
+      >
+        <p className={`text-[10px] tracking-[0.3em] uppercase mb-2.5 ${stats.won ? 'text-accent-foreground' : 'text-destructive'}`}>
+          {stats.won ? 'All pairs discovered' : 'Time Expired'}
+        </p>
+        <h1
+          className="text-foreground leading-none tracking-tight"
+          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: "clamp(2.2rem, 7vw, 3.4rem)" }}
+        >
+          {stats.won ? 'Level Complete' : 'Mission Failed'}
+        </h1>
+        <p className="text-sm text-muted-foreground mt-3">
+          {stats.won
+            ? `${stats.matches} perfect forms, perfectly aligned in ${stats.moves} moves.`
+            : `You found ${stats.matches} pairs before time ran out.`}
+        </p>
+      </motion.div>
+
+      {/* Discovered pairs grid */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2 }}
+        className="grid grid-cols-4 w-full mb-10"
+        style={{ gap: 10, maxWidth: 340 }}
+      >
+        {shapes.slice(0, 8).map((shape, i) => {
+          const ShapeLeft = shape.Left;
+          const ShapeRight = shape.Right;
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.82 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.28 + i * 0.065, duration: 0.38 }}
+              className="bg-white rounded-xl border border-border flex flex-col items-center py-2.5 px-1"
+              style={{ boxShadow: "0 2px 10px rgba(44,40,32,0.07)" }}
+            >
+              <div className="flex h-7 w-full justify-center opacity-80">
+                <div className="w-1/2 h-full"><ShapeLeft color="#2a9d8f" /></div>
+                <div className="w-1/2 h-full"><ShapeRight color="#2a9d8f" /></div>
+              </div>
+              <p className="text-[7.5px] text-muted-foreground mt-1.5 text-center leading-tight px-0.5 truncate w-full">
+                {shape.name}
+              </p>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* Actions */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.85 }}
+        className="flex items-center gap-8"
+      >
+        <button
+          onClick={onRestart}
+          className="text-primary border-b border-primary/38 pb-px hover:border-primary transition-colors"
+          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: "0.9375rem" }}
+        >
+          Play Again
+        </button>
+        <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+        <button
+          onClick={onMenu}
+          className="text-foreground/65 border-b border-foreground/18 pb-px hover:text-foreground hover:border-foreground/45 transition-colors"
+          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: "0.9375rem" }}
+        >
+          Return to Menu
+        </button>
+      </motion.div>
+    </motion.div>
   );
 }

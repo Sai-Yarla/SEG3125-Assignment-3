@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { AnimatePresence } from 'motion/react';
 import SetupScreen from './screens/SetupScreen';
 import GameplayScreen from './screens/GameplayScreen';
 import GameOverScreen from './screens/GameOverScreen';
@@ -24,9 +25,7 @@ export default function App() {
   }, []);
 
   const handleRestart = useCallback(() => {
-    // Restart with same config
     setScreen('gameplay');
-    // Force remount by changing key (handled in render)
     setGameConfig(prev => ({ ...prev, _key: Date.now() }));
   }, []);
 
@@ -37,28 +36,31 @@ export default function App() {
   }, []);
 
   return (
-    <>
-      {screen === 'setup' && (
-        <SetupScreen onStart={handleStart} />
-      )}
+    <div className="w-full h-full bg-background overflow-y-auto overflow-x-hidden">
+      <AnimatePresence mode="wait">
+        {screen === 'setup' && (
+          <SetupScreen key="setup" onStart={handleStart} />
+        )}
 
-      {screen === 'gameplay' && gameConfig && (
-        <GameplayScreen
-          key={gameConfig._key || 'game'}
-          config={gameConfig}
-          onGameOver={handleGameOver}
-          onBack={handleBackToSetup}
-        />
-      )}
+        {screen === 'gameplay' && gameConfig && (
+          <GameplayScreen
+            key={gameConfig._key || 'gameplay'}
+            config={gameConfig}
+            onGameOver={handleGameOver}
+            onBack={handleBackToSetup}
+          />
+        )}
 
-      {screen === 'gameover' && gameResults && (
-        <GameOverScreen
-          results={gameResults}
-          onRestart={handleRestart}
-          onBack={handleBackToSetup}
-        />
-      )}
-    </>
+        {screen === 'gameover' && gameResults && (
+          <GameOverScreen
+            key="gameover"
+            stats={gameResults}
+            onRestart={handleRestart}
+            onMenu={handleBackToSetup}
+          />
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 

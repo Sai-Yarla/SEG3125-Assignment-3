@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
-import TopBar from '../components/TopBar';
+import { motion } from 'motion/react';
 import GameGrid from '../components/GameGrid';
 import useGameState from '../hooks/useGameState';
 import useTimer from '../hooks/useTimer';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   GameplayScreen — Active game session
-   Manages the core flip → match/mismatch → win/loss loop
+   GameplayScreen — Active game session (Figma UI version)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function GameplayScreen({ config, onGameOver, onBack }) {
@@ -16,7 +15,7 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
   const {
     cards, flippedCardIds, matches, moves, totalPairs,
     gameStatus, mismatchIds,
-    initGame, flipCard, checkMatch, mismatchReset, timeUp, restart,
+    initGame, flipCard, checkMatch, mismatchReset, timeUp,
   } = game;
 
   // Initialize game on mount
@@ -35,7 +34,6 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
   // Check for match when two cards are flipped
   useEffect(() => {
     if (flippedCardIds.length === 2) {
-      // Small delay for the player to see both cards
       const timeout = setTimeout(() => {
         checkMatch();
       }, 400);
@@ -61,7 +59,6 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
   // Transition to game over when game ends
   useEffect(() => {
     if (gameStatus === 'won' || gameStatus === 'lost') {
-      // Small delay to let the final match animation play
       const timeout = setTimeout(() => {
         onGameOver({
           won: gameStatus === 'won',
@@ -78,73 +75,75 @@ export default function GameplayScreen({ config, onGameOver, onBack }) {
     }
   }, [gameStatus, timer.timeDisplay, timer.elapsed, matches, moves, totalPairs, onGameOver, config]);
 
-  const accuracy = moves > 0 ? Math.round((matches / moves) * 100) : 100;
   const isDisabled = gameStatus !== 'playing' || mismatchIds.length > 0;
 
   return (
-    <div className="gameplay-screen">
-      <TopBar />
-
-      {/* HUD Bar */}
-      <div className="hud-bar" id="hud-bar">
-        <div className="hud-bar__left">
-          <div className="hud-bar__stat">
-            <span>Grid:</span>
-            <span className="hud-bar__stat-value">
-              {config.gridSize.toUpperCase()}
-            </span>
-          </div>
-          <div className="hud-bar__stat">
-            <span>Theme:</span>
-            <span className="hud-bar__stat-value">
-              {config.deck === 'mechanical' ? 'Mechanical' : 'Shark'}
-            </span>
-          </div>
-          <div className="hud-bar__stat">
-            <span>Matches:</span>
-            <span className="hud-bar__stat-value">{matches}/{totalPairs}</span>
-          </div>
-          <div className="hud-bar__stat">
-            <span>Moves:</span>
-            <span className="hud-bar__stat-value">{moves}</span>
-          </div>
-          <div className="hud-bar__stat">
-            <span>Accuracy:</span>
-            <span className="hud-bar__stat-value">{accuracy}%</span>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-background flex flex-col"
+      style={{ fontFamily: "'DM Sans', sans-serif" }}
+    >
+      {/* Header */}
+      <div className="shrink-0 pt-10 pb-5 px-6 flex items-end justify-between max-w-sm mx-auto w-full">
+        <div>
+          <p className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">Steel Shark</p>
+          <p className="text-sm text-foreground mt-0.5" style={{ fontFamily: "'Playfair Display', serif" }}>
+            Gestalt Match
+          </p>
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={onBack}
+              className="text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Quit
+            </button>
           </div>
         </div>
-
-        <div className="hud-bar__right">
-          {/* Timer */}
-          {config.timedMode ? (
-            <div className={`hud-bar__timer ${timer.isUrgent ? 'hud-bar__timer--urgent' : ''}`} id="timer-display">
-              {timer.timeDisplay}
-            </div>
-          ) : (
-            <div className="hud-bar__timer hud-bar__timer--relaxed" id="timer-display">
-              {timer.timeDisplay}
-            </div>
-          )}
-
-          <button
-            className="hud-bar__button"
-            onClick={onBack}
-            id="quit-button"
+        <div className="text-right">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Pairs found</p>
+          <p
+            className="text-[1.6rem] text-foreground leading-none mt-0.5"
+            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
           >
-            Quit
-          </button>
+            {matches}
+            <span className="text-sm text-muted-foreground"> / {totalPairs}</span>
+          </p>
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1.5" style={{ color: config.timedMode && timer.isUrgent ? 'var(--destructive)' : undefined }}>
+            Time: {timer.timeDisplay}
+          </p>
         </div>
       </div>
 
-      {/* Game Grid */}
-      <GameGrid
-        cards={cards}
-        gridSize={config.gridSize}
-        deck={config.deck}
-        mismatchIds={mismatchIds}
-        onCardClick={flipCard}
-        disabled={isDisabled}
-      />
-    </div>
+      {/* Pair progress bar */}
+      <div className="px-6 max-w-sm mx-auto w-full mb-5">
+        <div className="h-px bg-border rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-primary/40 rounded-full"
+            animate={{ width: `${totalPairs > 0 ? (matches / totalPairs) * 100 : 0}%` }}
+            transition={{ duration: 0.4 }}
+          />
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="flex-1 flex items-center justify-center px-5 pb-4">
+        <GameGrid
+          cards={cards}
+          gridSize={config.gridSize}
+          deck={config.deck}
+          mismatchIds={mismatchIds}
+          onCardClick={flipCard}
+          disabled={isDisabled}
+        />
+      </div>
+
+      {/* Hint */}
+      <p className="shrink-0 pb-8 text-center text-[11px] text-muted-foreground">
+        Pair each {config.deck === 'mechanical' ? 'part' : 'shark'}&apos;s left and right halves
+      </p>
+    </motion.div>
   );
 }

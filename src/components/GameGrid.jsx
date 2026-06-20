@@ -1,11 +1,12 @@
 import GameCard from './GameCard';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   GameGrid — Renders NxN grid of GameCards
+   GameGrid — Renders NxN grid of GameCards with Tailwind
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function GameGrid({ cards, gridSize, deck, mismatchIds, onCardClick, disabled }) {
-  const gridClass = `game-grid game-grid--${gridSize}`;
+  const columns = gridSize === '4x4' ? 4 : gridSize === '5x5' ? 5 : 6;
+  const maxWidth = gridSize === '4x4' ? 344 : gridSize === '5x5' ? 430 : 516;
 
   // For 5x5, insert a blank spacer in the center (position 12) since 12 pairs = 24 cards
   const renderItems = [];
@@ -15,12 +16,11 @@ export default function GameGrid({ cards, gridSize, deck, mismatchIds, onCardCli
     for (let i = 0; i < 25; i++) {
       if (i === centerIndex) {
         renderItems.push(
-          <div key="blank-center" className="game-card game-card--blank" style={{
+          <div key="blank-center" className="relative w-full pb-[100%]" style={{
             background: 'var(--bg-secondary)',
             border: '1px dashed var(--border-primary)',
-            borderRadius: 'var(--radius-sm)',
+            borderRadius: '1rem',
             opacity: 0.3,
-            aspectRatio: '1',
           }} />
         );
       } else if (cardIdx < cards.length) {
@@ -54,10 +54,18 @@ export default function GameGrid({ cards, gridSize, deck, mismatchIds, onCardCli
   }
 
   return (
-    <div className="game-grid-wrapper">
-      <div className={gridClass} id="game-grid" role="grid" aria-label="Memory card grid">
-        {renderItems}
-      </div>
+    <div
+      className="grid w-full"
+      style={{
+        gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        gap: 10,
+        maxWidth: maxWidth,
+      }}
+      id="game-grid"
+      role="grid"
+      aria-label="Memory card grid"
+    >
+      {renderItems}
     </div>
   );
 }
